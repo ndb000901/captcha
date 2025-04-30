@@ -1,0 +1,6 @@
+.vscode/**
+build/**
+deps/freetype/build/**
+deps/freetype/objs/**
+deps/libpng/build/**
+libs/**
