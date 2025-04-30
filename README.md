@@ -31,7 +31,7 @@ iVBORw0KGgoAAAANSUhEUgAAAMgAAAAyCAIAAACWMwO2AAAb9UlEQVR4nOVceXwTZfp/JpNkcqdN0zbp
 
 ### 验证码
 
-![](./test/images/code.png)
+![](./test/images/captcha.png)
 
 ## 3. 使用示例
 
