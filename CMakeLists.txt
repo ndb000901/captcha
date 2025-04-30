@@ -8,11 +8,15 @@ include(ExternalProject)
 option(BUILD_DEPS "Whether to build deps using build-deps.sh" ON)
 
 if(BUILD_DEPS)
-    message(STATUS "Running build-deps.sh...")
-    execute_process(
-        COMMAND bash ${PROJECT_SOURCE_DIR}/build-deps.sh ${PROJECT_SOURCE_DIR}
+    add_custom_command(
+        OUTPUT ${CMAKE_BINARY_DIR}/.deps_built
+        COMMAND bash ${PROJECT_SOURCE_DIR}/deps/build-deps.sh ${PROJECT_SOURCE_DIR}
+        COMMAND touch ${CMAKE_BINARY_DIR}/.deps_built
         WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+        COMMENT "Building dependencies via build-deps.sh"
     )
+
+    add_custom_target(build_deps ALL DEPENDS ${CMAKE_BINARY_DIR}/.deps_built)
 endif()
 
 
@@ -46,20 +50,13 @@ target_link_libraries(
 set_target_properties(captcha_static PROPERTIES OUTPUT_NAME "captcha")
 set_target_properties(captcha_static PROPERTIES SUFFIX ".a")
 
-# file(
-#     GLOB
-#     TEST_SOURCES
-#     ${PROJECT_SOURCE_DIR}/src/captcha.c
-#     ${PROJECT_SOURCE_DIR}/src/base64.c
-#     ${PROJECT_SOURCE_DIR}/test/test.c
-# )
-# add_executable(test ${TEST_SOURCES})
-# target_link_libraries(test PRIVATE freetype png)
 
-# file(
-#     GLOB
-#     TEST_SOURCES
-#     ${PROJECT_SOURCE_DIR}/test/test.c
-# )
-# add_executable(test ${TEST_SOURCES})
-# target_link_libraries(test PRIVATE captcha png freetype bz2 z brotlidec brotlicommon)
+file(
+    GLOB
+    TEST_SOURCES
+    ${PROJECT_SOURCE_DIR}/src/captcha.c
+    ${PROJECT_SOURCE_DIR}/src/base64.c
+    ${PROJECT_SOURCE_DIR}/test/test.c
+)
+add_executable(test ${TEST_SOURCES})
+target_link_libraries(test PRIVATE freetype png)

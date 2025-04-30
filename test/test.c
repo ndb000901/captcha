@@ -18,24 +18,26 @@ int main(int argc, char **argv) {
     unsigned char *data;
     int size = 0;
 
-    // for (int i = 0; i < 1000; i++) {
-    //     gen_captcha_random(&ctx, &data, &size);
-    //     size_t base64_size = 0;
-    //     char* base64 = base64_encode(data, size, &base64_size);
-    //     if (i == 999) {
-    //     printf("%s\n", base64);
-    //     }
-    //     // printf("%s\n", base64);
-    //     free(data);
-    //     free(base64);
-    // }
-    const char *code = "ABCDEF";
-    gen_captcha(&ctx, code, 6, &data, &size);
-    size_t base64_size = 0;
-    char* base64 = base64_encode(data, size, &base64_size);
-    printf("%s\n", base64);
-    free(data);
-    free(base64);
+    for (int i = 0; i < 1000; i++) {
+        gen_captcha_random(&ctx, &data, &size);
+        size_t base64_size = 0;
+        char* base64 = base64_encode(data, size, &base64_size);
+        if (i == 999) {
+            printf("%s\n", base64);
+        }
+        // printf("%s\n", base64);
+        free(data);
+        free(base64);
+    }
+
+
+    // const char *code = "ABCDEF";
+    // gen_captcha(&ctx, code, 6, &data, &size);
+    // size_t base64_size = 0;
+    // char* base64 = base64_encode(data, size, &base64_size);
+    // printf("%s\n", base64);
+    // free(data);
+    // free(base64);
     destroy_captcha_context(&ctx);
     return 0;
 }
